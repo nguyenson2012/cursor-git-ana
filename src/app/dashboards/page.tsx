@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { FiHome, FiSettings, FiBookOpen, FiCreditCard, FiCode, FiStar, FiPlus, FiEdit2, FiTrash2, FiEye, FiCopy } from "react-icons/fi";
 import { supabase } from "../../../lib/supabaseClient";
+import Notification from "./Notification";
 
 interface ApiKey {
     id: number;
@@ -30,6 +31,9 @@ export default function Dashboards() {
     const [showKeyId, setShowKeyId] = useState<number | null>(null);
     const [modalMode, setModalMode] = useState<'create' | 'edit'>('create');
     const [editRowId, setEditRowId] = useState<number | null>(null);
+    const [showCopied, setShowCopied] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState("");
+    const [showNotification, setShowNotification] = useState(false);
 
     // Fetch API keys from Supabase
     useEffect(() => {
@@ -74,6 +78,9 @@ export default function Dashboards() {
             setNewType("dev");
             setNewKey("");
             setNewUsage(0);
+            setNotificationMessage("API Key created");
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 2000);
         }
     };
 
@@ -87,6 +94,9 @@ export default function Dashboards() {
             setError("Failed to delete API key");
         } else {
             setApiKeys((prev) => prev.filter((k) => k.id !== id));
+            setNotificationMessage("API Key deleted");
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 2000);
         }
     };
 
@@ -120,11 +130,16 @@ export default function Dashboards() {
             setNewType("dev");
             setNewKey("");
             setNewUsage(0);
+            setNotificationMessage("API Key updated");
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 2000);
         }
     };
 
     const handleCopy = (key: string) => {
         navigator.clipboard.writeText(key);
+        setShowCopied(true);
+        setTimeout(() => setShowCopied(false), 2000);
     };
 
     return (
@@ -341,6 +356,16 @@ export default function Dashboards() {
                     )}
                 </div>
             </main>
+            <Notification
+                show={showCopied}
+                message="Copied API Key to clipboard"
+                onClose={() => setShowCopied(false)}
+            />
+            <Notification
+                show={showNotification}
+                message={notificationMessage}
+                onClose={() => setShowNotification(false)}
+            />
         </div>
     );
 }
