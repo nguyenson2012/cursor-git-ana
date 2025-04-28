@@ -1,5 +1,6 @@
 import React from "react";
 import { FiHome, FiSettings, FiBookOpen, FiCreditCard, FiCode, FiStar } from "react-icons/fi";
+import Link from "next/link";
 
 export default function Sidebar() {
   return (
@@ -10,7 +11,7 @@ export default function Sidebar() {
         </div>
         <nav className="flex flex-col gap-2">
           <SidebarLink icon={<FiHome />} label="Overview" active />
-          <SidebarLink icon={<FiCode />} label="API Playground" />
+          <SidebarLink icon={<FiCode />} label="API Playground" href="/playground" />
           <SidebarLink icon={<FiStar />} label="Use Cases" />
           <SidebarLink icon={<FiCreditCard />} label="Billing" />
           <SidebarLink icon={<FiSettings />} label="Settings" />
@@ -25,7 +26,21 @@ export default function Sidebar() {
   );
 }
 
-function SidebarLink({ icon, label, active, external }: { icon: React.ReactNode; label: string; active?: boolean; external?: boolean }) {
+function SidebarLink({ icon, label, active, external, href }: { icon: React.ReactNode; label: string; active?: boolean; external?: boolean; href?: string }) {
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-gray-700 font-medium ${active ? "bg-blue-50 text-blue-700" : "hover:bg-gray-100"}`}
+        target={external ? "_blank" : undefined}
+        rel={external ? "noopener noreferrer" : undefined}
+      >
+        <span className="text-lg">{icon}</span>
+        {label}
+        {external && <span className="ml-auto text-xs text-gray-400">↗</span>}
+      </Link>
+    );
+  }
   return (
     <a
       href="#"
