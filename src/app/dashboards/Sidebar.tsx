@@ -7,7 +7,7 @@ export default function Sidebar() {
     <aside className="w-64 bg-white shadow-lg rounded-2xl flex flex-col justify-between py-6 px-4 min-h-screen">
       <div>
         <div className="flex items-center gap-2 mb-8">
-          <span className="text-2xl font-bold text-gray-800">tavily</span>
+          <span className="text-2xl font-bold text-gray-800">Github Analytics</span>
         </div>
         <nav className="flex flex-col gap-2">
           <SidebarLink icon={<FiHome />} label="Overview" active />
@@ -20,7 +20,7 @@ export default function Sidebar() {
       </div>
       <div className="flex items-center gap-2 mt-8">
         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="avatar" className="w-8 h-8 rounded-full" />
-        <span className="text-gray-700 font-medium">sơn nguyễn</span>
+        <span className="text-gray-700 font-medium">Jacky</span>
       </div>
     </aside>
   );
