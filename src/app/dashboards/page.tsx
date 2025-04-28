@@ -145,7 +145,7 @@ export default function Dashboards() {
     return (
         <div className="flex min-h-screen bg-[#f8fafc]">
             {/* Sidebar */}
-            <aside className="w-64 bg-white border-r flex flex-col justify-between py-6 px-4 min-h-screen">
+            <aside className="w-64 bg-white shadow-lg rounded-2xl flex flex-col justify-between py-6 px-4 min-h-screen">
                 <div>
                     <div className="flex items-center gap-2 mb-8">
                         <span className="text-2xl font-bold text-gray-800">tavily</span>
