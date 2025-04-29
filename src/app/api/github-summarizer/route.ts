@@ -4,13 +4,11 @@ import { getGithubRepoInfo } from "../../lib/githubUtils";
 
 export async function POST(req: NextRequest) {
     try {
-        console.log("POST request received");
         const { githubUrl } = await req.json();
-        console.log(githubUrl);
         const apiKey = req.headers.get("x-api-key");
 
         if (!apiKey) {
-            return NextResponse.json({ valid: false, error: "API key is required" }, {
+            return NextResponse.json({ success: false, error: "API key is required" }, {
                 status: 400
             });
         }
@@ -19,7 +17,7 @@ export async function POST(req: NextRequest) {
         const result = await getApiKeyData(apiKey);
 
         if (!result.valid || !result.data) {
-            return NextResponse.json({ valid: false, error: result.error || "Invalid API key" }, {
+            return NextResponse.json({ success: false, error: result.error || "Invalid API key" }, {
                 status: 400
             });
         }
@@ -28,7 +26,7 @@ export async function POST(req: NextRequest) {
         const usageResult = await incrementApiKeyUsage(result.data);
 
         if (!usageResult.success) {
-            return NextResponse.json({ valid: false, error: usageResult.error }, {
+            return NextResponse.json({ success: false, error: usageResult.error }, {
                 status: 400
             });
         }
@@ -36,21 +34,13 @@ export async function POST(req: NextRequest) {
         // Get GitHub repo information
         const repoInfo = await getGithubRepoInfo(githubUrl);
 
-        if (!repoInfo.success || !repoInfo.data) {
-            return NextResponse.json({ valid: false, error: repoInfo.error || "Failed to fetch repository data" }, {
-                status: 400
-            });
-        }
+        return repoInfo;
 
-        return NextResponse.json({
-            valid: true,
-            data: {
-                repoInfo: repoInfo.data
-            }
-        }, {
-            status: 200
-        });
     } catch (err) {
-        return NextResponse.json({ valid: false, error: err }, { status: 500 });
+        console.error('Error:', err);
+        return NextResponse.json({ 
+            success: false, 
+            error: err instanceof Error ? err.message : "An unknown error occurred" 
+        }, { status: 500 });
     }
 }
