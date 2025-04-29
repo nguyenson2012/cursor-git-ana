@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Notification from "../dashboards/Notification";
-import { supabase } from "../../../lib/supabaseClient";
+import { supabase } from "../lib/supabaseClient";
 
 export default function Playground() {
   const [apiKey, setApiKey] = useState("");

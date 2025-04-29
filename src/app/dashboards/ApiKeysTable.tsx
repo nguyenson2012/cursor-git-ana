@@ -38,6 +38,7 @@ export default function ApiKeysTable({
             <th className="border-b px-4 py-2 text-left text-xs text-gray-500">NAME</th>
             <th className="border-b px-4 py-2 text-left text-xs text-gray-500">TYPE</th>
             <th className="border-b px-4 py-2 text-left text-xs text-gray-500">USAGE</th>
+            <th className="border-b px-4 py-2 text-left text-xs text-gray-500">LIMIT</th>
             <th className="border-b px-4 py-2 text-left text-xs text-gray-500">KEY</th>
             <th className="border-b px-4 py-2 text-left text-xs text-gray-500">OPTIONS</th>
           </tr>
@@ -50,6 +51,7 @@ export default function ApiKeysTable({
                 <span className={`px-3 py-1 rounded-full text-xs font-semibold ${key.type === "dev" ? "bg-blue-50 text-blue-600" : "bg-green-50 text-green-600"}`}>{key.type}</span>
               </td>
               <td className="px-4 py-2">{key.usage}</td>
+              <td className="px-4 py-2">{key.limit}</td>
               <td className="px-4 py-2">
                 <span className="inline-block font-mono bg-gray-50 border border-gray-200 rounded-full px-4 py-1 text-gray-700 select-all min-w-[220px]">
                   {showKeyId === key.id ? key.key : maskKey(key.key)}

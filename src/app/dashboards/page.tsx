@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { FiHome, FiSettings, FiBookOpen, FiCreditCard, FiCode, FiStar, FiPlus, FiEdit2, FiTrash2, FiEye, FiCopy } from "react-icons/fi";
-import { supabase } from "../../../lib/supabaseClient";
+import { supabase } from "../lib/supabaseClient";
 import Notification from "./Notification";
 import Sidebar from "./Sidebar";
 import ApiKeysTable from "./ApiKeysTable";
@@ -15,6 +15,7 @@ interface ApiKey {
   type: string;
   usage: number;
   key: string;
+  limit: number;
 }
 
 function maskKey(key: string) {
@@ -52,7 +53,7 @@ export default function Dashboards() {
       setError(null);
       const { data, error } = await supabase
         .from("api_keys")
-        .select("id, name, type, usage, key")
+        .select("id, name, type, usage, key, limit")
         .order("id", { ascending: true });
       if (error) {
         setError("Failed to fetch API keys");
@@ -88,7 +89,8 @@ export default function Dashboards() {
       await addKey({
         name: formName,
         type: formType,
-        usage: formUsage,
+        limit: formUsage,
+        usage: 0,
         key: "tvly-" + formType + "-" + Math.random().toString(36).slice(2, 18),
       });
       setNotificationMessage("API Key created");
