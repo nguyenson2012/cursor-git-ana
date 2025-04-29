@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { supabase } from "../../../../lib/supabaseClient";
+import { supabase } from "../../lib/supabaseClient";
 
 export interface ApiKey {
     id: number;
     name: string;
     type: string;
     usage: number;
+    limit: number;
     key: string;
 }
 
@@ -23,7 +24,7 @@ export function useApiKeys() {
         setError(null);
         const { data, error } = await supabase
             .from("api_keys")
-            .select("id, name, type, usage, key")
+            .select("id, name, type, usage, key, limit")
             .order("id", { ascending: true });
         if (error) setError("Failed to fetch API keys");
         else setApiKeys(data as ApiKey[]);
