@@ -1,12 +1,21 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import { RunnableSequence } from "@langchain/core/runnables";
+import { z } from "zod";
 
 interface SummaryResult {
     success: boolean;
-    summary?: string;
+    summary?: any;
     error?: string;
 }
+
+// Define the structure of the summary output
+const summarySchema = z.object({
+    mainPurpose: z.string().describe("The main purpose and key features of the repository"),
+    technologies: z.array(z.string()).describe("List of key technologies used in the project"),
+    setupInstructions: z.string().describe("Important setup and installation requirements"),
+    notableFeatures: z.array(z.string()).describe("List of notable features or capabilities")
+});
 
 export async function summarizeReadme(readmeContent: string): Promise<SummaryResult> {
     if (!process.env.GOOGLE_API_KEY) {
@@ -19,19 +28,15 @@ export async function summarizeReadme(readmeContent: string): Promise<SummaryRes
             model: "gemini-1.5-pro",
             temperature: 0,
             maxRetries: 2
-        });
+        }).withStructuredOutput(summarySchema);
 
         // Create a prompt template
-        const template = `Analyze and summarize the following GitHub repository README content. Focus on:
-        1. Main purpose and features
-        2. Key technologies used
-        3. Important setup instructions or requirements
-        4. Notable features or capabilities
+        const template = `Analyze and provide a structured summary of the following GitHub repository README content:
 
         README Content:
         {readme}
 
-        Provide a clear and concise summary.`;
+        Provide a structured summary following the schema format.`;
 
         const promptTemplate = ChatPromptTemplate.fromTemplate(template);
 
@@ -48,7 +53,7 @@ export async function summarizeReadme(readmeContent: string): Promise<SummaryRes
 
         return {
             success: true,
-            summary: result.text
+            summary: result
         };
 
     } catch (error) {
