@@ -25,7 +25,7 @@ export default function Home() {
       </header>
 
       <main className="flex-1 flex flex-col">
-        <section className="bg-white py-16 md:py-24 px-4">
+        <section className="bg-gradient-to-b from-blue-50 to-white py-16 md:py-24 px-4">
           <div className="container mx-auto">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 max-w-5xl mx-auto text-center bg-gradient-to-r from-blue-500 via-blue-400 to-teal-400 bg-clip-text text-transparent">
               Unlock GitHub Insights
@@ -120,7 +120,48 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="pricing" className="bg-white py-16 md:py-24 px-4">
+        <section className="bg-gradient-to-b from-white to-blue-50 py-16 md:py-24 px-4">
+          <div className="container mx-auto">
+            <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-500 via-blue-400 to-teal-400 bg-clip-text text-transparent">
+              Try It Out
+            </h2>
+            <div className="max-w-4xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-gray-50 p-6 rounded-xl">
+                  <h3 className="text-lg font-semibold mb-4">API Request</h3>
+                  <div className="bg-white rounded-lg p-4 font-mono text-sm">
+                    {`{
+  "githubUrl": "https://github.com/assafelovic/gpt-researcher"
+}`}
+                  </div>
+                  <div className="mt-4 flex justify-end">
+                    <Link
+                      href="/playground"
+                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                    >
+                      Try it out
+                    </Link>
+                  </div>
+                </div>
+                <div className="bg-gray-50 p-6 rounded-xl">
+                  <h3 className="text-lg font-semibold mb-4">API Response</h3>
+                  <div className="bg-white rounded-lg p-4 font-mono text-sm overflow-auto max-h-[200px]">
+                    {`{
+  "summary": "GPT Researcher is an autonomous agent designed for comprehensive online research on various tasks. It aims to provide detailed, factual, and unbiased research reports by leveraging AI technology. The project addresses issues of misinformation, speed, determinism, and reliability in research tasks.",
+  "cool_facts": [
+    "The project leverages both 'gpt-4o-mini' and 'gpt-4o' (128k context) to complete research tasks, optimizing costs",
+    "Implements autonomous agents for web scraping and research",
+    "Uses vector embeddings for better context understanding"
+  ]
+}`}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="pricing" className="bg-blue-50 py-16 md:py-24 px-4">
           <div className="container mx-auto">
             <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-500 via-blue-400 to-teal-400 bg-clip-text text-transparent">
               Pricing Plans
@@ -231,7 +272,7 @@ export default function Home() {
           </div>
         </section>
 
-        <footer className="bg-gray-50 py-8 px-4 border-t border-gray-200">
+        <footer className="bg-white py-8 px-4 border-t border-gray-200">
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-4 md:mb-0">
