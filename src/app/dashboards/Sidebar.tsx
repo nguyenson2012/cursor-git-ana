@@ -7,6 +7,9 @@ import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Sidebar() {
   const { data: session } = useSession();
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: '/' });
+  };
 
   return (
     <aside className="w-64 bg-white shadow-lg rounded-2xl flex flex-col justify-between py-6 px-4 min-h-screen">
@@ -27,15 +30,15 @@ export default function Sidebar() {
         {session ? (
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <img src={session.user?.image || "https://randomuser.me/api/portraits/men/32.jpg"} 
-                   alt="avatar" 
-                   className="w-8 h-8 rounded-full" />
+              <img src={session.user?.image || "https://randomuser.me/api/portraits/men/32.jpg"}
+                alt="avatar"
+                className="w-8 h-8 rounded-full" />
               <span className="text-gray-700 font-medium">{session.user?.name}</span>
             </div>
             <div className="flex items-center gap-2 mt-2">
               <div className="w-8" /> {/* Spacer to align with avatar */}
               <button
-                onClick={() => signOut()}
+                onClick={handleLogout}
                 className="text-red-600 hover:text-red-700 text-sm font-medium"
               >
                 Sign Out
@@ -47,9 +50,9 @@ export default function Sidebar() {
             onClick={() => signIn("google")}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
           >
-            <img src="https://authjs.dev/img/providers/google.svg" 
-                 alt="Google" 
-                 className="w-5 h-5" />
+            <img src="https://authjs.dev/img/providers/google.svg"
+              alt="Google"
+              className="w-5 h-5" />
             Sign in with Google
           </button>
         )}
